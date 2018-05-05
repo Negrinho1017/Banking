@@ -6,13 +6,10 @@ import scala.slick.driver.PostgresDriver.simple._
 object Main {
 
   // this is a class that represents the table I've created in the database
-  class Client(tag: Tag) extends Table[(Int, String)](tag, "client") {
+  class Client(tag: Tag) extends Table[(Int, String)](tag, "clients") {
     def id = column[Int]("id")
-    def name = column[String]("name")
-    def lastname = column[String]("lastname")
-    def identificationNumber = column[String]("identification_number")
-    def cellphone = column[String]("cellphone")
-    def * = (id, name)
+    def username = column[String]("username")
+    def * = (id, username)
   }
 
   def main(args: Array[String]): Unit = {
@@ -33,8 +30,8 @@ object Main {
         }
 
         // SELECT * FROM clients WHERE username='john'
-        clients.filter(_.name === "Willian").list foreach { row =>
-          println("user whose name is 'Willian' has id " + row._1)
+        clients.filter(_.username === "john").list foreach { row =>
+          println("user whose name is 'john' has id " + row._1)
         }
 
     }
