@@ -9,5 +9,4 @@ case class Account(
    state: State,
    inactiveDate: Option[ZonedDateTime],
    typeAccount:TypeAccount) {
-
 }
