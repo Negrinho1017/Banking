@@ -1,4 +1,4 @@
-package co.com.uco.banking.model.Client
+package co.com.uco.banking.model.client
 
 import java.time.ZonedDateTime
 
