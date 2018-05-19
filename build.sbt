@@ -11,7 +11,6 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       scalaTest,
       postgres,
-      sl4j,
       slick
     )
   )

@@ -2,7 +2,7 @@ package co.com.uco.banking.model.lending
 
 import java.time.ZonedDateTime
 
-import co.com.uco.banking.model.Main.Client
+import co.com.banking.infrastructure.persistence.Main.Client
 
 class Lending (
               client: Client,
