@@ -1,5 +1,5 @@
 
-package co.com.banking.infrastructure.persistence
+package co.com.banking
 
 import slick.jdbc.PostgresProfile.api._
 

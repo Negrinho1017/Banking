@@ -9,6 +9,6 @@ case class Client (
   lastName: String,
   birthDate: ZonedDateTime,
   identificationNumber: IdentificationNumber,
-  cellphone: String,
+  cellphone: Cellphone,
   account: Account
                   )

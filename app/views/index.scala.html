@@ -1,5 +1,22 @@
-@()
+@(clients: Seq[Client])
 
-@main("Welcome to Play") {
-  <h1>Welcome to Play!</h1>
+@main("Client Database") {
+<h1>Welcome to Banking Database!</h1>
+<div id="clients">
+    <h2>Insert a client here:</h2>
+
+    <form action="/insert/client" method="POST">
+        <input name="name" type="text" placeholder="enter name of the new client"/>
+        <input name="lastname" type="text" placeholder="enter last name of the new client"/>
+        <input type="submit"/>
+    </form>
+
+    <h2>Previously inserted clients:</h2>
+    <table>
+        <tr><th>Name</th><th>LastName</th></tr>
+        @for(c <- clients){
+        <tr><td>@c.name</td><td>@c.lastname</td></tr>
+        }
+    </table>
+</div>
 }

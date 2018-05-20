@@ -10,6 +10,8 @@ lazy val root = (project in file("."))
   .settings(
     libraryDependencies ++= Seq(
       scalaTest,
+      playSlick,
+      playSlickEvolution,
       postgres,
       slick
     )
