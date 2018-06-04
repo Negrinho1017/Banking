@@ -4,8 +4,7 @@ import co.com.banking.infrastructure.persistence.dao.ClientDAO
 import co.com.banking.infrastructure.persistence.models.ClientEntity
 import javax.inject.Inject
 import play.api.data.Form
-import play.api.data.Forms.mapping
-import play.api.data.Forms.text
+import play.api.data.Forms.{ mapping, text, date }
 import play.api.mvc.{AbstractController, ControllerComponents}
 import play.api.libs.json.Json.toJson
 
@@ -27,7 +26,9 @@ class Application @Inject() (
     mapping(
       "identification_number" -> text(),
       "name" -> text(),
-      "last_name" -> text()
+      "last_name" -> text(),
+      "cellphone" -> text(),
+      "account" -> text()
     )(ClientEntity.apply)(ClientEntity.unapply)
   )
 

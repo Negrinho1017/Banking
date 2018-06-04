@@ -8,6 +8,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class ClientDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(implicit executionContext: ExecutionContext) extends HasDatabaseConfigProvider[JdbcProfile] {
 
+  import java.util.Date
   import profile.api._
 
   private val Clients = TableQuery[ClientsTable]
@@ -19,11 +20,14 @@ class ClientDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvide
 
   private class ClientsTable(tag: Tag) extends Table[ClientEntity](tag, "client") {
 
+
     def identificationNumber = column[String]("identification_number", O.PrimaryKey)
     def name = column[String]("name")
     def lastName = column[String]("last_name")
+    def cellphone = column[String]("cellphone")
+    def account = column[String]("account")
 
-    def * = (identificationNumber, name, lastName) <> ((ClientEntity.apply _).tupled, ClientEntity.unapply)
+    def * = (identificationNumber, name, lastName, cellphone, account) <> ((ClientEntity.apply _).tupled, ClientEntity.unapply)
 
   }
 
