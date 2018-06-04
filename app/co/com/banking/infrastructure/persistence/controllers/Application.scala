@@ -7,6 +7,8 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 import play.api.data.Forms.text
 import play.api.mvc.{AbstractController, ControllerComponents}
+import play.api.libs.json.Json.toJson
+
 
 import scala.concurrent.ExecutionContext
 
@@ -17,20 +19,22 @@ class Application @Inject() (
 )(implicit executionContext: ExecutionContext) extends AbstractController(controllerComponents) {
 
   def index = Action.async {
-    clientDAO.all().map { case (clients) => Ok(views.html.index(clients)) }
+    clientDAO.all().map(clients => Ok(toJson("Cliente Agregado Correctamente")))
   }
+
 
   val clientForm = Form(
     mapping(
+      "identification_number" -> text(),
       "name" -> text(),
-      "lastname" -> text()
+      "last_name" -> text()
     )(Client.apply)(Client.unapply)
   )
 
 
   def insertClient = Action.async { implicit request =>
       val client: Client = clientForm.bindFromRequest.get
-      clientDAO.insert(client).map(_=> Redirect(routes.Application.index))
+      clientDAO.insert(client).map(_ => Redirect(routes.Application.index))
     }
 
 }
