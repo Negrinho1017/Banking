@@ -1,10 +1,10 @@
 package co.com.banking.infrastructure.persistence.controllers
 
-import co.com.banking.infrastructure.persistence.dao.{AccountDAO, ClientDAO}
-import co.com.banking.infrastructure.persistence.models.{AccountEntity, ClientEntity}
+import co.com.banking.infrastructure.persistence.dao.{AccountDAO, BankMovementsDAO, ClientDAO}
+import co.com.banking.infrastructure.persistence.models.{AccountEntity, BankMovementsEntity, ClientEntity}
 import javax.inject.Inject
 import play.api.data.Form
-import play.api.data.Forms.{date, longNumber, mapping, nonEmptyText, optional, text, of}
+import play.api.data.Forms.{date, longNumber, mapping, nonEmptyText, of, optional, text}
 import play.api.mvc.{AbstractController, ControllerComponents}
 import play.api.libs.json.Json.toJson
 import play.api.data.format.Formats._
@@ -15,6 +15,7 @@ class Application @Inject() (
 
   clientDAO: ClientDAO,
   accountDAO: AccountDAO,
+  bankMovementsDAO: BankMovementsDAO,
   controllerComponents: ControllerComponents
 )(implicit executionContext: ExecutionContext) extends AbstractController(controllerComponents) {
 
@@ -50,6 +51,22 @@ class Application @Inject() (
   def createNewAccount = Action.async { implicit request =>
     val account: AccountEntity = accountForm.bindFromRequest.get
     accountDAO.insertAccount(account).map(_ => Ok(toJson("Account created correctly")))
+  }
+
+
+  val movementForm = Form(
+    mapping(
+      "code_movement" -> nonEmptyText,
+      "movement_type" -> optional(text()),
+      "root_account" -> optional(text()),
+      "destination_account" -> optional(text()),
+      "amount" -> optional(of(doubleFormat))
+    )(BankMovementsEntity.apply)(BankMovementsEntity.unapply)
+  )
+
+  def saveNewMovement = Action.async { implicit request =>
+    val movement: BankMovementsEntity = movementForm.bindFromRequest.get
+    bankMovementsDAO.insertNewMovement(movement).map(_ => Ok(toJson("Movement added correctly")))
   }
 
 }
