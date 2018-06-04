@@ -1,7 +1,7 @@
 package co.com.banking.infrastructure.persistence.controllers
 
 import co.com.banking.infrastructure.persistence.dao.ClientDAO
-import co.com.banking.infrastructure.persistence.models.Client
+import co.com.banking.infrastructure.persistence.models.ClientEntity
 import javax.inject.Inject
 import play.api.data.Form
 import play.api.data.Forms.mapping
@@ -28,12 +28,12 @@ class Application @Inject() (
       "identification_number" -> text(),
       "name" -> text(),
       "last_name" -> text()
-    )(Client.apply)(Client.unapply)
+    )(ClientEntity.apply)(ClientEntity.unapply)
   )
 
 
   def insertClient = Action.async { implicit request =>
-      val client: Client = clientForm.bindFromRequest.get
+      val client: ClientEntity = clientForm.bindFromRequest.get
       clientDAO.insert(client).map(_ => Redirect(routes.Application.index))
     }
 
