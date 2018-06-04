@@ -6,7 +6,9 @@ import slick.jdbc.JdbcProfile
 import co.com.banking.infrastructure.persistence.models.ClientEntity
 import scala.concurrent.{ExecutionContext, Future}
 
-class ClientDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(implicit executionContext: ExecutionContext) extends HasDatabaseConfigProvider[JdbcProfile] {
+
+class ClientDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(implicit executionContext: ExecutionContext)
+  extends HasDatabaseConfigProvider[JdbcProfile] {
 
   import java.util.Date
   import profile.api._
@@ -20,12 +22,14 @@ class ClientDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvide
 
   private class ClientsTable(tag: Tag) extends Table[ClientEntity](tag, "client") {
 
+    //implicit val dateColumnType = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))
 
     def identificationNumber = column[String]("identification_number", O.PrimaryKey)
-    def name = column[String]("name")
-    def lastName = column[String]("last_name")
-    def cellphone = column[String]("cellphone")
-    def account = column[String]("account")
+    def name = column[Option[String]]("name")
+    def lastName = column[Option[String]]("last_name")
+    def cellphone = column[Option[String]]("cellphone")
+    def account = column[Option[String]]("account")
+    //def birthdate = column[Date]("birthdate")
 
     def * = (identificationNumber, name, lastName, cellphone, account) <> ((ClientEntity.apply _).tupled, ClientEntity.unapply)
 
