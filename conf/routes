@@ -6,10 +6,10 @@
 # An example controller showing a sample home page
 
 # Database Home
-GET     /                           co.com.banking.infrastructure.persistence.controllers.Application.index
-POST    /insert/client              co.com.banking.infrastructure.persistence.controllers.Application.insertClient
-POST    /create/new/account         co.com.banking.infrastructure.persistence.controllers.Application.createNewAccount
-POST    /add/new/movement           co.com.banking.infrastructure.persistence.controllers.Application.saveNewMovement
+GET     /                           co.com.banking.presentation.controllers.Application.index
+POST    /insert/client              co.com.banking.presentation.controllers.Application.insertClient
+POST    /create/new/account         co.com.banking.presentation.controllers.Application.createNewAccount
+POST    /add/new/movement           co.com.banking.presentation.controllers.Application.saveNewMovement
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
