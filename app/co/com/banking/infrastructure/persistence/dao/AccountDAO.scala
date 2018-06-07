@@ -3,7 +3,7 @@ package co.com.banking.infrastructure.persistence.dao
 import javax.inject.Inject
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
-import co.com.banking.infrastructure.persistence.models.{AccountEntity}
+import co.com.banking.infrastructure.persistence.dto.{AccountDto}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -15,19 +15,19 @@ class AccountDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvid
 
   private val Accounts = TableQuery[AccountsTable]
 
-  def allAccounts(): Future[Seq[AccountEntity]] = db.run(Accounts.result)
+  def allAccounts(): Future[Seq[AccountDto]] = db.run(Accounts.result)
 
-  def insertAccount(account: AccountEntity): Future[Unit] = db.run(Accounts += account).map { _ => () }
+  def insertAccount(account: AccountDto): Future[Unit] = db.run(Accounts += account).map { _ => () }
 
 
-  private class AccountsTable(tag: Tag) extends Table[AccountEntity](tag, "account") {
+  private class AccountsTable(tag: Tag) extends Table[AccountDto](tag, "account") {
 
     def accountNumber = column[String]("account_number", O.PrimaryKey)
     def typeAccount = column[Option[String]]("type_account")
     def state = column[Option[String]]("state")
     def balance = column[Option[Double]]("balance")
 
-    def * = (accountNumber, typeAccount, state, balance) <> ((AccountEntity.apply _).tupled, AccountEntity.unapply)
+    def * = (accountNumber, typeAccount, state, balance) <> ((AccountDto.apply _).tupled, AccountDto.unapply)
 
   }
 

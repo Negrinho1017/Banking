@@ -1,7 +1,7 @@
 package co.com.banking.infrastructure.persistence.controllers
 
 import co.com.banking.infrastructure.persistence.dao.{AccountDAO, BankMovementsDAO, ClientDAO}
-import co.com.banking.infrastructure.persistence.models.{AccountEntity, BankMovementsEntity, ClientEntity}
+import co.com.banking.infrastructure.persistence.dto.{AccountDto, BankMovementsDto, ClientDto}
 import javax.inject.Inject
 import play.api.data.Form
 import play.api.data.Forms.{date, longNumber, mapping, nonEmptyText, of, optional, text}
@@ -31,11 +31,11 @@ class Application @Inject() (
       "last_name" -> optional(text()),
       "cellphone" -> optional(text()),
       "account" -> optional(text())
-    )(ClientEntity.apply)(ClientEntity.unapply)
+    )(ClientDto.apply)(ClientDto.unapply)
   )
 
   def insertClient = Action.async { implicit request =>
-      val client: ClientEntity = clientForm.bindFromRequest.get
+      val client: ClientDto = clientForm.bindFromRequest.get
       clientDAO.insert(client).map(_ => Redirect(routes.Application.index))
     }
 
@@ -45,11 +45,11 @@ class Application @Inject() (
       "type_account" -> optional(text()),
       "state" -> optional(text()),
       "balance" -> optional(of(doubleFormat))
-    )(AccountEntity.apply)(AccountEntity.unapply)
+    )(AccountDto.apply)(AccountDto.unapply)
   )
 
   def createNewAccount = Action.async { implicit request =>
-    val account: AccountEntity = accountForm.bindFromRequest.get
+    val account: AccountDto = accountForm.bindFromRequest.get
     accountDAO.insertAccount(account).map(_ => Ok(toJson("Account created correctly")))
   }
 
@@ -61,11 +61,11 @@ class Application @Inject() (
       "root_account" -> optional(text()),
       "destination_account" -> optional(text()),
       "amount" -> optional(of(doubleFormat))
-    )(BankMovementsEntity.apply)(BankMovementsEntity.unapply)
+    )(BankMovementsDto.apply)(BankMovementsDto.unapply)
   )
 
   def saveNewMovement = Action.async { implicit request =>
-    val movement: BankMovementsEntity = movementForm.bindFromRequest.get
+    val movement: BankMovementsDto = movementForm.bindFromRequest.get
     bankMovementsDAO.insertNewMovement(movement).map(_ => Ok(toJson("Movement added correctly")))
   }
 

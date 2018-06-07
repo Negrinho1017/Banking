@@ -1,6 +1,6 @@
-package co.com.banking.infrastructure.persistence.models
+package co.com.banking.infrastructure.persistence.dto
 
-case class BankMovementsEntity (
+case class BankMovementsDto(
                                codeMovement: String,
                                movementType: Option[String],
                                rootAccount: Option[String],

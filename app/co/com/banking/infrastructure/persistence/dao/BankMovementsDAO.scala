@@ -3,7 +3,7 @@ package co.com.banking.infrastructure.persistence.dao
 import javax.inject.Inject
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
-import co.com.banking.infrastructure.persistence.models.{AccountEntity, BankMovementsEntity}
+import co.com.banking.infrastructure.persistence.dto.{AccountDto, BankMovementsDto}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -15,12 +15,12 @@ class BankMovementsDAO @Inject() (protected val dbConfigProvider: DatabaseConfig
 
   private val bankMovements = TableQuery[BankMovementsTable]
 
-  def allMovements(): Future[Seq[BankMovementsEntity]] = db.run(bankMovements.result)
+  def allMovements(): Future[Seq[BankMovementsDto]] = db.run(bankMovements.result)
 
-  def insertNewMovement(bankMovement: BankMovementsEntity): Future[Unit] = db.run(bankMovements += bankMovement).map { _ => () }
+  def insertNewMovement(bankMovement: BankMovementsDto): Future[Unit] = db.run(bankMovements += bankMovement).map { _ => () }
 
 
-  private class BankMovementsTable(tag: Tag) extends Table[BankMovementsEntity](tag, "bank_movements") {
+  private class BankMovementsTable(tag: Tag) extends Table[BankMovementsDto](tag, "bank_movements") {
 
     def codeMovement = column[String]("code_movement", O.PrimaryKey)
     def movementType = column[Option[String]]("movement_type")
@@ -28,7 +28,7 @@ class BankMovementsDAO @Inject() (protected val dbConfigProvider: DatabaseConfig
     def destinationAccount = column[Option[String]]("destination_account")
     def amount = column[Option[Double]]("amount")
 
-    def * = (codeMovement, movementType, rootAccount, destinationAccount, amount) <> ((BankMovementsEntity.apply _).tupled, BankMovementsEntity.unapply)
+    def * = (codeMovement, movementType, rootAccount, destinationAccount, amount) <> ((BankMovementsDto.apply _).tupled, BankMovementsDto.unapply)
 
   }
 

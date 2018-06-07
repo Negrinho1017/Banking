@@ -1,6 +1,6 @@
-package co.com.banking.infrastructure.persistence.models
+package co.com.banking.infrastructure.persistence.dto
 
-case class AccountEntity (
+case class AccountDto(
                            accountNumber: String,
                            typeAccount: Option[String],
                            state: Option[String],
