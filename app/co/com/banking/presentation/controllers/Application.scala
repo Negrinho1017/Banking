@@ -1,6 +1,5 @@
 package co.com.banking.presentation.controllers
 
-import co.com.banking.infrastructure.persistence.controllers.routes
 import co.com.banking.infrastructure.persistence.dao.{AccountDAO, BankMovementsDAO, ClientDAO}
 import co.com.banking.infrastructure.persistence.dto.{AccountDto, BankMovementsDto, ClientDto}
 import javax.inject.Inject
@@ -37,7 +36,7 @@ class Application @Inject() (
 
   def insertClient = Action.async { implicit request =>
       val client: ClientDto = clientForm.bindFromRequest.get
-      clientDAO.insert(client).map(_ => Redirect(routes.Application.index))
+      clientDAO.insert(client).map(_ => Ok(toJson("Account created correctly")))
     }
 
   val accountForm = Form(
