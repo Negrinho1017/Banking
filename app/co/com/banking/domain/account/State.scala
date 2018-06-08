@@ -1,4 +1,4 @@
-package co.com.uco.banking.domain.account
+package domain.account
 
 sealed trait State
 

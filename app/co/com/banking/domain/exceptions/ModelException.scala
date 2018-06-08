@@ -1,4 +1,4 @@
-package co.com.uco.banking.domain.exceptions
+package domain.exceptions
 
 trait ModelException {
   val description:String

@@ -1,7 +1,6 @@
-package co.com.banking.domain.services
+package model.services
 
-import co.com.uco.banking.domain.account.Account
-
+import domain.account.Account
 
 object AccountService {
 
