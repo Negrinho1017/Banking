@@ -1,8 +1,9 @@
-package co.com.uco.banking.model.lending
+package co.com.uco.banking.domain.lending
 
 import java.time.ZonedDateTime
-import co.com.banking.model.lending.LendingValue
-import co.com.uco.banking.model.client.Client
+
+import co.com.banking.domain.lending.LendingValue
+import co.com.uco.banking.domain.client.Client
 
 class Lending (
                 client: Client,

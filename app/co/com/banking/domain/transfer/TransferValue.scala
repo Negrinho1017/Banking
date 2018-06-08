@@ -1,6 +1,7 @@
-package co.com.banking.model.transfer
+package co.com.banking.domain.transfer
 
-import co.com.uco.banking.model.exceptions.TransferValueException
+import co.com.uco.banking.domain.exceptions.TransferValueException
+
 
 class TransferValue(value: BigDecimal) {
 

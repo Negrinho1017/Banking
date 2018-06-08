@@ -1,9 +1,10 @@
-package co.com.uco.banking.model.transfer
+package co.com.uco.banking.domain.transfer
 
 import java.time.ZonedDateTime
 
-import co.com.banking.model.transfer.TransferValue
-import co.com.uco.banking.model.account.Account
+import co.com.banking.domain.transfer.TransferValue
+import co.com.uco.banking.domain.account.Account
+
 
 case class Transfer(
                      originAccount: Account,

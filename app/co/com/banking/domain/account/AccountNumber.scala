@@ -1,6 +1,6 @@
-package co.com.uco.banking.model.account
+package co.com.uco.banking.domain.account
 
-import co.com.uco.banking.model.exceptions.AccountNumberException
+import co.com.uco.banking.domain.exceptions.AccountNumberException
 
 import scala.util.Try
 

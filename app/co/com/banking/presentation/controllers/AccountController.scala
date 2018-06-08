@@ -2,7 +2,7 @@ package co.com.banking.presentation.controllers
 
 import javax.inject.{Inject, Singleton}
 
-import co.com.uco.banking.model.account.Account
+import co.com.uco.banking.domain.account.Account
 import play.api.libs.json.Json
 import play.api.mvc.{AbstractController, AnyContent, ControllerComponents, Request}
 

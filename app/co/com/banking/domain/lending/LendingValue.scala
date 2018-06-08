@@ -1,6 +1,6 @@
-package co.com.banking.model.lending
+package co.com.banking.domain.lending
 
-import co.com.uco.banking.model.exceptions.LendingValueException
+import co.com.uco.banking.domain.exceptions.LendingValueException
 
 class LendingValue(value: BigDecimal) {
 

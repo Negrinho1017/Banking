@@ -1,6 +1,8 @@
-package co.com.uco.banking.model.client
+package co.com.uco.banking.domain.client
 
-import co.com.uco.banking.model.exceptions.{IdentificationNumberException, ModelException}
+
+
+import co.com.uco.banking.domain.exceptions.IdentificationNumberException
 
 import scala.util.Try
 

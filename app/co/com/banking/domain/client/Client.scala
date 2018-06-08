@@ -1,8 +1,9 @@
-package co.com.uco.banking.model.client
+package co.com.uco.banking.domain.client
 
 import java.time.ZonedDateTime
 
-import co.com.uco.banking.model.account.Account
+import co.com.uco.banking.domain.account.Account
+
 
 case class Client (
   name: String,

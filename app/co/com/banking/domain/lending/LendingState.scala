@@ -1,4 +1,4 @@
-package co.com.uco.banking.model.lending
+package co.com.uco.banking.domain.lending
 
 sealed trait LendingState {
 

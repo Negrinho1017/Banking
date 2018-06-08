@@ -11,7 +11,7 @@ import play.api.mvc.{AbstractController, ControllerComponents}
 
 import scala.concurrent.ExecutionContext
 
-class Application @Inject() (
+class ApplicationController @Inject()(
 
   clientDAO: ClientDAO,
   accountDAO: AccountDAO,
