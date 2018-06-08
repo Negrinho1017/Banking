@@ -13,7 +13,7 @@ class AccountController @Inject()(cc: ControllerComponents) extends AbstractCont
   def consignAccount() = Action { implicit request: Request[AnyContent] =>
     println("request: " + request.body.asJson)
     val json = request.body.asJson.get
-    val account: Account = json.as[Account]
+    //val account: Account = json.as[Account]
 
 
     Ok("todo bien")
