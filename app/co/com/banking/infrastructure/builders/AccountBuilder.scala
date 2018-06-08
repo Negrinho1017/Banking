@@ -22,5 +22,7 @@ class AccountBuilder {
       a <- accountNumber.right
     } yield new Account(b, a, ZonedDateTime.now(), Active, None, Personal)
   }
+
+
 }
 
