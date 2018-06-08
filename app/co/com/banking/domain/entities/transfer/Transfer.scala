@@ -2,7 +2,7 @@ package co.com.uco.banking.domain.transfer
 
 import java.time.ZonedDateTime
 
-import co.com.banking.domain.transfer.TransferValue
+import co.com.banking.domain.entities.transfer.TransferValue
 import co.com.uco.banking.domain.account.Account
 
 

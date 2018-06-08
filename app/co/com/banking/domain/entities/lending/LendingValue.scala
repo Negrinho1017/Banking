@@ -1,4 +1,4 @@
-package co.com.banking.domain.lending
+package co.com.banking.domain.entities.lending
 
 import co.com.uco.banking.domain.exceptions.LendingValueException
 
