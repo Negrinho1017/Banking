@@ -1,6 +1,6 @@
-package co.com.uco.banking.domain.account
+package domain.account
 
-import co.com.uco.banking.domain.exceptions.BalanceException
+import domain.exceptions.BalanceException
 
 
 case class Balance(saldo:BigDecimal)

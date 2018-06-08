@@ -1,8 +1,6 @@
-package co.com.uco.banking.domain.client
+package domain.client
 
-
-
-import co.com.uco.banking.domain.exceptions.IdentificationNumberException
+import domain.exceptions.IdentificationNumberException
 
 import scala.util.Try
 

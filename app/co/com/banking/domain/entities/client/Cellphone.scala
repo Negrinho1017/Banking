@@ -1,6 +1,7 @@
-package co.com.uco.banking.domain.client
+package domain.client
 
-import co.com.uco.banking.domain.exceptions.CellphoneException
+
+import domain.exceptions.CellphoneException
 
 import scala.util.Try
 
