@@ -1,9 +1,9 @@
-package infrastructure.builders
+package co.com.banking.infrastructure.builders
 
 import java.time.ZonedDateTime
 
 import co.com.banking.infrastructure.persistence.dto.AccountDto
-import domain.account._
+import co.com.banking.domain.entities.account._
 import domain.exceptions.ModelException
 
 class AccountBuilder {

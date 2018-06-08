@@ -1,6 +1,6 @@
 package model.services
 
-import domain.account.Account
+import co.com.banking.domain.entities.account.Account
 
 object AccountService {
 

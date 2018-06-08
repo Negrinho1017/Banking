@@ -1,4 +1,4 @@
-package domain.account
+package co.com.banking.domain.entities.account
 
 import java.time.ZonedDateTime
 

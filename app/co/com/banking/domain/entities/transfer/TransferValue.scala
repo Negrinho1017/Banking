@@ -1,4 +1,4 @@
-package domain.transfer
+package co.com.banking.domain.entities.transfer
 
 import domain.exceptions.TransferValueException
 

@@ -1,7 +1,8 @@
-package domain.transfer
+package co.com.banking.domain.entities.transfer
 
 import java.time.ZonedDateTime
-import domain.account.Account
+
+import co.com.banking.domain.entities.account.Account
 
 
 case class Transfer(

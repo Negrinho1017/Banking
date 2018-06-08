@@ -1,4 +1,5 @@
-package domain.account
+package co.com.banking.domain.entities.account
+
 import domain.exceptions.AccountNumberException
 
 import scala.util.Try

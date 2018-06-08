@@ -1,7 +1,8 @@
-package domain.client
+package co.com.banking.domain.entities.client
 
 import java.time.ZonedDateTime
-import domain.account.Account
+
+import co.com.banking.domain.entities.account.Account
 
 
 case class Client (

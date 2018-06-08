@@ -1,5 +1,4 @@
-package domain.client
-
+package co.com.banking.domain.entities.client
 
 import domain.exceptions.CellphoneException
 
