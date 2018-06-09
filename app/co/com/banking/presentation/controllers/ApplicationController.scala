@@ -20,7 +20,7 @@ class ApplicationController @Inject()(
 )(implicit executionContext: ExecutionContext) extends AbstractController(controllerComponents) {
 
   def index = Action.async {
-    clientDAO.all().map(clients => Ok(toJson("Client added correctly")))
+    clientDAO.all().map(client => Ok(toJson("Client added correctly" + client)))
   }
 
 
@@ -67,6 +67,37 @@ class ApplicationController @Inject()(
   def saveNewMovement = Action.async { implicit request =>
     val movement: BankMovementsDto = movementForm.bindFromRequest.get
     bankMovementsDAO.insertNewMovement(movement).map(_ => Ok(toJson("Movement added correctly")))
+  }
+
+  def findMovement = Action.async { implicit request =>
+    val movement: BankMovementsDto = movementForm.bindFromRequest.get
+    val movementResult = for {
+      movementR <- bankMovementsDAO.findByCodeMovement(movement.codeMovement)
+    } yield (movementR)
+    movementResult.map{
+
+      case movementR =>
+        movementR match {
+          case Some(c) =>  Ok(toJson(movementForm.fill(c).data))
+          case None => NotFound
+        }
+
+    }
+  }
+
+  def findByCodeMovement(codeMovement: String) = Action.async { implicit request =>
+    val findMovement = for {
+      movement <- bankMovementsDAO.findByCodeMovement(codeMovement)
+    } yield (movement)
+
+    findMovement.map{
+      case (movement) =>
+        movement match {
+          case Some(c) => Ok(toJson(movementForm.fill(c).data))
+          case None => NotFound
+        }
+    }
+
   }
 
 }
