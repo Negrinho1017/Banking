@@ -3,7 +3,7 @@ package co.com.banking.presentation.controllers
 import co.com.banking.infrastructure.persistence.dao.{AccountDAO, BankMovementsDAO, ClientDAO}
 import co.com.banking.infrastructure.persistence.dto.{AccountDto, BankMovementsDto, ClientDto}
 import javax.inject.Inject
-import play.api.data.Form
+import play.api.data.{Form, Mapping}
 import play.api.data.Forms.{mapping, nonEmptyText, of, optional, text}
 import play.api.data.format.Formats._
 import play.api.libs.json.Json.toJson
@@ -85,6 +85,21 @@ class ApplicationController @Inject()(
     }
   }
 
+  def findByMovementType = Action.async { implicit request =>
+    val movementRequest: Map[String, String] = movementForm.bindFromRequest.data
+    val movementResponse = for {
+      movementRe <- bankMovementsDAO.findByMovementType(movementRequest.get("movement_type").get)
+    } yield (movementRe)
+    movementResponse.map{
+
+      case movementRe =>
+        movementRe match {
+          case Some(c) => Ok(toJson(movementForm.fill(c).data))
+          case None => NotFound
+        }
+    }
+  }
+
   def findByCodeMovement(codeMovement: String) = Action.async { implicit request =>
     val findMovement = for {
       movement <- bankMovementsDAO.findByCodeMovement(codeMovement)
@@ -99,5 +114,7 @@ class ApplicationController @Inject()(
     }
 
   }
+
+
 
 }
