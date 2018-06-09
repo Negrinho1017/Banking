@@ -1,7 +1,7 @@
 package co.com.banking.presentation.mappers
 
 import co.com.banking.infrastructure.persistence.dto.AccountDto
-import co.com.banking.presentation.request.ConsignAccountRequest
+import co.com.banking.presentation.request.{OperationAccountRequest, TransferRequest}
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText, of, optional, text}
 import play.api.data.format.Formats._
@@ -24,7 +24,17 @@ object AccountMapper {
       "typeId" -> nonEmptyText,
       "numId" -> nonEmptyText,
       "value" -> of(bigDecimalFormat)
-    )(ConsignAccountRequest.apply)(ConsignAccountRequest.unapply)
+    )(OperationAccountRequest.apply)(OperationAccountRequest.unapply)
+  )
+
+  val transferForm = Form(
+    mapping(
+      "IdOrigin" -> of(longFormat),
+      "IdDestination" -> of(longFormat),
+      "typeId" -> nonEmptyText,
+      "numId" -> nonEmptyText,
+      "value" -> of(bigDecimalFormat)
+    )(TransferRequest.apply)(TransferRequest.unapply)
   )
 
 }
