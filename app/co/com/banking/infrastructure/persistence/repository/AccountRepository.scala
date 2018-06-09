@@ -12,4 +12,9 @@ object AccountRepository {
     account:Account
   }
 
+  def getAccountById(countId:Long) = {
+    //obtenemos el dto de la consulta
+    //invocamos el builder y le mandamos el dto y devolvemos la cuenta
+  }
+
 }

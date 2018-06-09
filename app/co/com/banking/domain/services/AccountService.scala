@@ -17,8 +17,17 @@ object AccountService {
     accountRepository.saveConsigAccount(accountUpdate, client)
   }
 
+  def debitAccount(account: Account, client: Client, value:BigDecimal) = {
+    //hacemos las validaciones semejantes a la anterior
+  }
+
   def getAccount(idAccount:Long) ={
-    //consulta al repository y me devuelve la cuenta
+    //consulta al accountRepository y me devuelve la cuenta
+  }
+
+  def transfer(rootAccount: Account, destinationAccount: Account, value:BigDecimal) = {
+    //aqui hacemos un debito a un cuenta y un credito a otra cuenta
+    //persistimos la información
   }
 
 }
