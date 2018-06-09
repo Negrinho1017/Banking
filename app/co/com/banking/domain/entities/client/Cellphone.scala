@@ -1,14 +1,14 @@
 package co.com.banking.domain.entities.client
 
-import domain.exceptions.CellphoneException
+import domain.exceptions.CellphoneErrors
 
 import scala.util.Try
 
 case class Cellphone(number: Long) {}
 
 object Cellphone{
-  def apply(number: String): Either[CellphoneException, Cellphone] = {
-    Try(number.toLong).fold[Either[CellphoneException,Cellphone]](ex => Left(new CellphoneException()),c => Right(new Cellphone(c)))
+  def apply(number: String): Either[CellphoneErrors, Cellphone] = {
+    Try(number.toLong).fold[Either[CellphoneErrors,Cellphone]](ex => Left(new CellphoneErrors()), c => Right(new Cellphone(c)))
   }
 }
 

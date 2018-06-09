@@ -8,7 +8,6 @@ import co.com.banking.presentation.mappers.AccountMapper
 import co.com.banking.presentation.request.OperationAccountRequest
 import model.services.AccountService
 import play.api.libs.json.Json
-import play.api.libs.json.Json.toJson
 import play.api.mvc.{AbstractController, AnyContent, ControllerComponents, Request}
 
 
@@ -25,11 +24,23 @@ class AccountController @Inject()(cc: ControllerComponents) extends AbstractCont
     println("request: " + request.body.asJson)
     val json = request.body.asJson.get
 
-    //val consign: ConsignAccountRequest = json.as[ConsignAccountRequest]
-    //deberiamos mapear esta información que viene del json
     val consign: OperationAccountRequest = accountMapper.consignForm.bindFromRequest().get
+
+
     val account = accountService.getAccount(consign.idAccount)
     val client = clientService.getClient(consign.tipoId, consign.numId)
+
+    accountService.operacion(cuenta, tipooperacion)
+
+
+    //service
+    operacion(tipooera...){
+    if(tipooperacion){
+      saldo - valor
+    }else{
+      saldo + valor
+    }
+  }
 
     //val accountResult = accountService.consignAccount(account, client, consign.value)
 

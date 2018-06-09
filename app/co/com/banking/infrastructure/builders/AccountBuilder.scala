@@ -4,7 +4,7 @@ import java.time.ZonedDateTime
 
 import co.com.banking.infrastructure.persistence.dto.AccountDto
 import co.com.banking.domain.entities.account._
-import domain.exceptions.ModelException
+import domain.exceptions.ModelErrors
 
 class AccountBuilder {
   def convertFromDomainToDto(account: Account): AccountDto = {
@@ -14,7 +14,7 @@ class AccountBuilder {
       Some(account.balance.saldo.toDouble))
   }
 
-  def convertFromDtoToDomain(accountDto: AccountDto): Either[ModelException, Account] = {
+  def convertFromDtoToDomain(accountDto: AccountDto): Either[ModelErrors, Account] = {
     val balance = Balance(BigDecimal.double2bigDecimal(accountDto.balance.get))
     val accountNumber = AccountNumber(accountDto.accountNumber)
     for{

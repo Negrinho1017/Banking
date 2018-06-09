@@ -10,3 +10,4 @@ case class Account(
    inactiveDate: Option[ZonedDateTime],
    typeAccount:TypeAccount) {
 }
+

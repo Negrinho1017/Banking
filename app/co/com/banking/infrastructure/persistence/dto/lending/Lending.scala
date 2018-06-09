@@ -1,4 +1,4 @@
-package co.com.banking.domain.entities.lending
+package co.com.banking.infrastructure.persistence.dto.lending
 
 import java.time.ZonedDateTime
 

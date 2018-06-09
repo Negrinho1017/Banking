@@ -2,8 +2,21 @@ package co.com.banking.infrastructure.persistence.repository
 
 import co.com.banking.domain.entities.account.Account
 import co.com.banking.domain.entities.client.Client
+import co.com.banking.infrastructure.builders.AccountBuilder
+import co.com.banking.infrastructure.persistence.dao.{AccountDAO, BankMovementsDAO}
+import co.com.banking.infrastructure.persistence.dto.{AccountDto, BankMovementsDto}
+import domain.exceptions.ModelErrors
+import javax.inject.Inject
 
-object AccountRepository {
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.Try
+
+class AccountRepository @Inject()(
+accountDAO: AccountDAO,
+bankMovementsDAO: BankMovementsDAO,
+accountBuilder: AccountBuilder
+)(implicit executionContext: ExecutionContext){
+
 
   def saveConsigAccount(account: Account, client: Client): Account={
     //llamamamos los dao y persistimos la información
@@ -12,9 +25,18 @@ object AccountRepository {
     account:Account
   }
 
-  def getAccountById(countId:Long) = {
-    //obtenemos el dto de la consulta
-    //invocamos el builder y le mandamos el dto y devolvemos la cuenta
+  def getAccountById(accountId:String)= {
+    for {
+      account <- accountDAO.findByAccountNumber(accountId)
+    } yield {
+      account.map(acc => accountBuilder.convertFromDtoToDomain(acc))
+    }
+  }
+
+  //recibimos los datos necesarios para guardar el movimiento
+  def saveMovement(accountOrigin: Account, accountDestination: Account, typeMov, String) ={
+    val movementDTO = BankMovementsDto.apply()
+    bankMovementsDAO.insertNewMovement()
   }
 
 }

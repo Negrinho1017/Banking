@@ -8,9 +8,9 @@ import play.api.data.{Form, Mapping}
 import play.api.data.Forms.{mapping, nonEmptyText, of, optional, text}
 import play.api.data.format.Formats._
 import play.api.libs.json.Json.toJson
-import play.api.mvc.{AbstractController, ControllerComponents}
+import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents}
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class ApplicationController @Inject()(
 
@@ -78,7 +78,7 @@ class ApplicationController @Inject()(
   }
 
   def findAccount(accountNumber: String) = Action.async { implicit request =>
-    val fAccount = for {
+    val fAccount: Future[Option[AccountDto]] = for {
       account <- accountDAO.findByAccountNumber(accountNumber)
     } yield (account)
 
@@ -151,6 +151,8 @@ class ApplicationController @Inject()(
           case None => NotFound
         }
     }
+
+
 
   }
 

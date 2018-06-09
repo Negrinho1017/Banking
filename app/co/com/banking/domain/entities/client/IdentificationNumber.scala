@@ -1,13 +1,13 @@
 package co.com.banking.domain.entities.client
 
-import domain.exceptions.IdentificationNumberException
+import domain.exceptions.IdentificationNumberErrors
 
 import scala.util.Try
 
 case class IdentificationNumber(number: Long)
 
 object IdentificationNumber{
-  def apply(number: String): Either[IdentificationNumberException, IdentificationNumber] = {
-    Try(number.toLong).fold[Either[IdentificationNumberException,IdentificationNumber]](ex => Left(new IdentificationNumberException()),v => Right(new IdentificationNumber(v)))
+  def apply(number: String): Either[IdentificationNumberErrors, IdentificationNumber] = {
+    Try(number.toLong).fold[Either[IdentificationNumberErrors,IdentificationNumber]](ex => Left(new IdentificationNumberErrors()), v => Right(new IdentificationNumber(v)))
   }
 }
