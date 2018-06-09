@@ -5,6 +5,7 @@ import co.com.banking.infrastructure.builders.{AccountBuilder, ClientBuilder}
 import co.com.banking.infrastructure.persistence.dao.{AccountDAO, BankMovementsDAO, ClientDAO}
 import domain.exceptions.ClientNotFound
 import javax.inject.Inject
+import cats.implicits._
 
 import scala.concurrent.{ExecutionContext, Future}
 

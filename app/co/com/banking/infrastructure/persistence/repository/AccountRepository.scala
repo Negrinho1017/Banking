@@ -7,6 +7,7 @@ import co.com.banking.infrastructure.persistence.dao.{AccountDAO, BankMovementsD
 import co.com.banking.infrastructure.persistence.dto.{AccountDto, BankMovementsDto}
 import domain.exceptions.{AccountNotFound, ModelErrors}
 import javax.inject.Inject
+import cats.implicits._
 
 import scala.concurrent.{ExecutionContext, Future}
 

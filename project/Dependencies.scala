@@ -7,6 +7,7 @@ object Dependencies {
   lazy val playSlick =  "com.typesafe.play" %% "play-slick" % "3.0.0"
   lazy val playSlickEvolution = "com.typesafe.play" %% "play-slick-evolutions" % "3.0.0"
   lazy val postgres = "org.postgresql" % "postgresql" % "42.2.1"
+  lazy val cats = "org.typelevel" %% "cats-core" % "1.1.0"
 
 }
 

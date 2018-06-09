@@ -13,5 +13,6 @@ case class AccountNumberErrors(description: String = "Numero invalido") extends 
 
 case class AccountNotFound(description: String = "Cuenta no encontrada") extends ModelErrors
 case class ClientNotFound(description: String = "Cliente no encontrado") extends ModelErrors
+case class InvalidOperation(description: String = "Operación no válida") extends ModelErrors
 case class GenericError(description: String) extends ModelErrors
 
