@@ -21,7 +21,6 @@ class ApplicationController @Inject()(
 )(implicit executionContext: ExecutionContext) extends AbstractController(controllerComponents) {
 
 
-  //inyectamos el mapper, inyeccion de dependencias
   val clientMapper = ClientMapper
 
   val accountMapper = AccountMapper
@@ -32,25 +31,15 @@ class ApplicationController @Inject()(
   }
 
   def insertClient = Action.async { implicit request =>
-    val client: ClientDto = clientMapper.clientForm.bindFromRequest.get
+    val client: ClientDto = clientForm.bindFromRequest.get
       clientDAO.insert(client).map(_ => Ok(toJson("Account created correctly")))
     }
 
   def createNewAccount = Action.async { implicit request =>
-    val account: AccountDto = accountMapper.accountForm.bindFromRequest.get
+    val account: AccountDto = accountForm.bindFromRequest.get
     accountDAO.insertAccount(account).map(_ => Ok(toJson("Account created correctly")))
   }
 
-
-  val movementForm = Form(
-    mapping(
-      "code_movement" -> nonEmptyText,
-      "movement_type" -> optional(text()),
-      "root_account" -> optional(text()),
-      "destination_account" -> optional(text()),
-      "amount" -> optional(of(doubleFormat))
-    )(BankMovementsDto.apply)(BankMovementsDto.unapply)
-  )
 
   def saveNewMovement = Action.async { implicit request =>
     val movement: BankMovementsDto = movementForm.bindFromRequest.get
@@ -74,7 +63,7 @@ class ApplicationController @Inject()(
   }
 
   def findAccountService = Action.async { implicit request =>
-    val accountRequest: AccountDto = accountMapper.accountForm.bindFromRequest.get
+    val accountRequest: AccountDto = accountForm.bindFromRequest.get
     val accountResult = for {
       accountR <- accountDAO.findByAccountNumber(accountRequest.accountNumber)
     } yield (accountR)
@@ -82,7 +71,7 @@ class ApplicationController @Inject()(
 
       case accountR =>
         accountR match {
-          case Some(c) => Ok(toJson(accountMapper.accountForm.fill(c).data))
+          case Some(c) => Ok(toJson(accountForm.fill(c).data))
           case None => NotFound
         }
     }
@@ -96,7 +85,7 @@ class ApplicationController @Inject()(
     fAccount.map{
       case (account) =>
         account match {
-          case Some(c) => Ok(toJson(accountMapper.accountForm.fill(c).data))
+          case Some(c) => Ok(toJson(accountForm.fill(c).data))
           case None => NotFound
         }
     }
@@ -141,7 +130,7 @@ class ApplicationController @Inject()(
     findClient.map{
       case (client) =>
         client match {
-          case Some(c) => Ok(toJson(clientMapper.clientForm.fill(c).data))
+          case Some(c) => Ok(toJson(clientForm.fill(c).data))
           case None => NotFound
         }
     }
@@ -149,6 +138,49 @@ class ApplicationController @Inject()(
   }
 
 
+  def findClientByIdentificationNumberService = Action.async { implicit request =>
+    val clientRequest: ClientDto = clientForm.bindFromRequest.get
+    val findClient = for {
+      client <- clientDAO.findByIdentificationNumber(clientRequest.identificationNumber)
+    } yield (client)
 
+    findClient.map{
+      case (client) =>
+        client match {
+          case Some(c) => Ok(toJson(clientForm.fill(c).data))
+          case None => NotFound
+        }
+    }
+
+  }
+
+  val movementForm = Form(
+    mapping(
+      "code_movement" -> nonEmptyText,
+      "movement_type" -> optional(text()),
+      "root_account" -> optional(text()),
+      "destination_account" -> optional(text()),
+      "amount" -> optional(of(doubleFormat))
+    )(BankMovementsDto.apply)(BankMovementsDto.unapply)
+  )
+
+  val clientForm = Form(
+    mapping(
+      "identification_number" -> nonEmptyText,
+      "name" -> optional(text()),
+      "last_name" -> optional(text()),
+      "cellphone" -> optional(text()),
+      "account" -> optional(text())
+    )(ClientDto.apply)(ClientDto.unapply)
+  )
+
+  val accountForm = Form(
+    mapping(
+      "account_number" -> nonEmptyText,
+      "type_account" -> optional(text()),
+      "state" -> optional(text()),
+      "balance" -> optional(of(doubleFormat))
+    )(AccountDto.apply)(AccountDto.unapply)
+  )
 
 }

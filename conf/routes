@@ -13,6 +13,7 @@ POST    /add/new/movement           co.com.banking.presentation.controllers.Appl
 POST    /find/movement/by/code      co.com.banking.presentation.controllers.ApplicationController.findMovement
 POST    /find/by/movement/type      co.com.banking.presentation.controllers.ApplicationController.findByMovementType
 POST    /find/account/by/number     co.com.banking.presentation.controllers.ApplicationController.findAccountService
+POST    /find/client/by/document    co.com.banking.presentation.controllers.ApplicationController.findClientByIdentificationNumberService
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
