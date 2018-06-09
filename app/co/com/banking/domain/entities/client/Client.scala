@@ -11,5 +11,4 @@ case class Client (
   birthDate: ZonedDateTime,
   identificationNumber: IdentificationNumber,
   cellphone: Cellphone,
-  account: Account
-                  )
+  account: Account)
