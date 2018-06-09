@@ -2,6 +2,7 @@ package co.com.banking.presentation.controllers
 
 import co.com.banking.infrastructure.persistence.dao.{AccountDAO, BankMovementsDAO, ClientDAO}
 import co.com.banking.infrastructure.persistence.dto.{AccountDto, BankMovementsDto, ClientDto}
+import co.com.banking.presentation.mappers.{AccountMapper, ClientMapper}
 import javax.inject.Inject
 import play.api.data.{Form, Mapping}
 import play.api.data.Forms.{mapping, nonEmptyText, of, optional, text}
@@ -19,37 +20,23 @@ class ApplicationController @Inject()(
   controllerComponents: ControllerComponents
 )(implicit executionContext: ExecutionContext) extends AbstractController(controllerComponents) {
 
+
+  //inyectamos el mapper, inyeccion de dependencias
+  val clientMapper = ClientMapper
+  val accountMapper = AccountMapper
+
+
   def index = Action.async {
     clientDAO.all().map(client => Ok(toJson("Client added correctly" + client)))
   }
 
-
-  val clientForm = Form(
-    mapping(
-      "identification_number" -> nonEmptyText,
-      "name" -> optional(text()),
-      "last_name" -> optional(text()),
-      "cellphone" -> optional(text()),
-      "account" -> optional(text())
-    )(ClientDto.apply)(ClientDto.unapply)
-  )
-
   def insertClient = Action.async { implicit request =>
-      val client: ClientDto = clientForm.bindFromRequest.get
+    val client: ClientDto = clientMapper.clientForm.bindFromRequest.get
       clientDAO.insert(client).map(_ => Ok(toJson("Account created correctly")))
     }
 
-  val accountForm = Form(
-    mapping(
-      "account_number" -> nonEmptyText,
-      "type_account" -> optional(text()),
-      "state" -> optional(text()),
-      "balance" -> optional(of(doubleFormat))
-    )(AccountDto.apply)(AccountDto.unapply)
-  )
-
   def createNewAccount = Action.async { implicit request =>
-    val account: AccountDto = accountForm.bindFromRequest.get
+    val account: AccountDto = accountMapper.accountForm.bindFromRequest.get
     accountDAO.insertAccount(account).map(_ => Ok(toJson("Account created correctly")))
   }
 
