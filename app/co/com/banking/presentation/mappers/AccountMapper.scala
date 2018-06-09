@@ -7,7 +7,7 @@ import play.api.data.Forms.{mapping, nonEmptyText, of, optional, text}
 import play.api.data.format.Formats._
 
 
-object AccountMapper {
+class AccountMapper {
 
   val accountForm = Form(
     mapping(
@@ -20,7 +20,7 @@ object AccountMapper {
 
   val consignForm = Form(
     mapping(
-      "accountId" -> of(longFormat),
+      "accountId" -> nonEmptyText,
       "typeId" -> nonEmptyText,
       "numId" -> nonEmptyText,
       "value" -> of(bigDecimalFormat)

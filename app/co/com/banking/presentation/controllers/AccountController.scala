@@ -12,13 +12,12 @@ import play.api.mvc.{AbstractController, AnyContent, ControllerComponents, Reque
 
 
 @Singleton
-class AccountController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
-
-  //OJO Inyectar dependencias
-  val accountService = AccountService
-  val clientService = ClientService
-
-  val accountMapper = AccountMapper
+class AccountController @Inject()(
+  cc: ControllerComponents,
+  accountService: AccountService,
+  clientService: ClientService,
+  accountMapper: AccountMapper
+) extends AbstractController(cc) {
 
   def consignAccount() = Action { implicit request: Request[AnyContent] =>
     println("request: " + request.body.asJson)
@@ -30,17 +29,17 @@ class AccountController @Inject()(cc: ControllerComponents) extends AbstractCont
     val account = accountService.getAccount(consign.idAccount)
     val client = clientService.getClient(consign.tipoId, consign.numId)
 
-    accountService.operacion(cuenta, tipooperacion)
+    //accountService.operacion(cuenta, tipooperacion)
 
 
     //service
-    operacion(tipooera...){
-    if(tipooperacion){
-      saldo - valor
-    }else{
-      saldo + valor
-    }
-  }
+    //operacion(tipooera...){
+    //if(tipooperacion){
+    //  saldo - valor
+    //}else{
+    //  saldo + valor
+    //}
+  //}
 
     //val accountResult = accountService.consignAccount(account, client, consign.value)
 

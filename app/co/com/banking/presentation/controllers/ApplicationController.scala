@@ -21,11 +21,6 @@ class ApplicationController @Inject()(
 )(implicit executionContext: ExecutionContext) extends AbstractController(controllerComponents) {
 
 
-  val clientMapper = ClientMapper
-
-  val accountMapper = AccountMapper
-
-
   def index = Action.async {
     clientDAO.all().map(client => Ok(toJson("Client added correctly" + client)))
   }

@@ -34,9 +34,9 @@ accountBuilder: AccountBuilder
   }
 
   //recibimos los datos necesarios para guardar el movimiento
-  def saveMovement(accountOrigin: Account, accountDestination: Account, typeMov, String) ={
-    val movementDTO = BankMovementsDto.apply()
-    bankMovementsDAO.insertNewMovement()
-  }
+  //def saveMovement(accountOrigin: Account, accountDestination: Account, typeMov: String, ammount:Double) ={
+    //val movementDTO = BankMovementsDto.apply("djfsf343", typeMov, accountOrigin, accountDestination, ammount)
+    //bankMovementsDAO.insertNewMovement()
+ // }
 
 }
