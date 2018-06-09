@@ -1,14 +1,20 @@
-package co.com.banking.presentation.controllers
+ package co.com.banking.presentation.controllers
 
+import cats.data.EitherT
 import javax.inject.{Inject, Singleton}
 import co.com.banking.domain.entities.account.Account
+import co.com.banking.domain.entities.client.Client
 import co.com.banking.domain.services.ClientService
 import co.com.banking.infrastructure.persistence.dto.ClientDto
 import co.com.banking.presentation.mappers.AccountMapper
 import co.com.banking.presentation.request.OperationAccountRequest
+import domain.exceptions.{GenericError, ModelErrors}
 import model.services.AccountService
 import play.api.libs.json.Json
 import play.api.mvc.{AbstractController, AnyContent, ControllerComponents, Request}
+
+import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 
 @Singleton
@@ -26,27 +32,25 @@ class AccountController @Inject()(
     val consign: OperationAccountRequest = accountMapper.consignForm.bindFromRequest().get
 
 
-    val account = accountService.getAccount(consign.idAccount)
+    val account: Future[Either[ModelErrors, Account]] = accountService.getAccount(consign.idAccount)
     val client = clientService.getClient(consign.tipoId, consign.numId)
 
-    //accountService.operacion(cuenta, tipooperacion)
+    val res: EitherT[Future, ModelErrors, Account] = for{
+      acc: Account <- EitherT(accountService.getAccount(consign.idAccount))
+      client: Client <- EitherT(clientService.getClient(consign.tipoId, consign.numId))
+    }yield {
+      accountService.operationSimple(acc, client, "CONSIGNAR", consign.value)
+    }
 
+    res.value.onComplete(f => f.match{
+      case Success(response) => response.fold(error => BadRequest(Json.toJson(GenericError(error.description))), (r: Account) => Ok(Json.toJson(r.toString)))
+      case Failure(ex) => {
+        println(s"Ha ocurrido una excepción ===> $ex")
+        InternalServerError(Json.toJson("Error inesperado en el sistema"))
+      }
+    })
 
-    //service
-    //operacion(tipooera...){
-    //if(tipooperacion){
-    //  saldo - valor
-    //}else{
-    //  saldo + valor
-    //}
-  //}
-
-    //val accountResult = accountService.consignAccount(account, client, consign.value)
-
-    //obtenemos el cliente para devolver el result
-    //val clientResult = accountService.consignAccount(account, client, consign.value)
-
-    Ok(Json.toJson("Aqui va el account Result"))
+    Ok(Json.toJson(""))
   }
 
   def debitAccount() = Action { implicit request: Request[AnyContent] =>

@@ -17,7 +17,7 @@ class BankMovementsDAO @Inject() (protected val dbConfigProvider: DatabaseConfig
 
   def allMovements(): Future[Seq[BankMovementsDto]] = db.run(bankMovements.result)
 
-  def insertNewMovement(bankMovement: BankMovementsDto): Future[Unit] = db.run(bankMovements += bankMovement).map { _ => () }
+  def insertNewMovement(bankMovement: BankMovementsDto) = db.run(bankMovements += bankMovement).map(_ => bankMovement)
 
   def findByCodeMovement(codeMovement: String): Future[Option[BankMovementsDto]] =
     db.run(bankMovements.filter(_.codeMovement === codeMovement).result.headOption)

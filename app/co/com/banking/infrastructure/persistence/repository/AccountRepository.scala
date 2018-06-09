@@ -1,9 +1,11 @@
 package co.com.banking.infrastructure.persistence.repository
 
+import cats.data.{EitherT, OptionT}
 import co.com.banking.domain.entities.account.Account
 import co.com.banking.infrastructure.builders.AccountBuilder
 import co.com.banking.infrastructure.persistence.dao.{AccountDAO, BankMovementsDAO}
 import co.com.banking.infrastructure.persistence.dto.{AccountDto, BankMovementsDto}
+import domain.exceptions.{AccountNotFound, ModelErrors}
 import javax.inject.Inject
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -14,12 +16,13 @@ class AccountRepository @Inject()(
   accountBuilder: AccountBuilder
   )(implicit executionContext: ExecutionContext){
 
-  def getAccountById(accountId:String)= {
-    for {
-      account <- accountDAO.findByAccountNumber(accountId)
+  def getAccountById(accountId:String): Future[Either[ModelErrors, Account]] = {
+    (for {
+      account <- OptionT(accountDAO.findByAccountNumber(accountId)).toRight(AccountNotFound())
+      acc     <- EitherT.fromEither[Future](accountBuilder.convertFromDtoToDomain(account))
     } yield {
-      account.map(acc => accountBuilder.convertFromDtoToDomain(acc))
-    }
+      acc
+    }).value
   }
 
   def saveMovement(accountOrigin: Account, accountDestination: Account, typeMov: String, value:BigDecimal) ={

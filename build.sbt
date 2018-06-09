@@ -13,7 +13,8 @@ lazy val root = (project in file("."))
       playSlick,
       playSlickEvolution,
       postgres,
-      slick
+      slick,
+      cats
     )
   )
 

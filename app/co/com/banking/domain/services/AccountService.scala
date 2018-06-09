@@ -10,23 +10,20 @@ import javax.inject.Inject
 class AccountService @Inject()(
   accountRepository: AccountRepository){
 
-  //Validate type return
-  def consignAccount(account: Account, client: Client, value:BigDecimal):Account = {
-
-    //validar porque se puede devolver un either con el error
-    val accountUpdate = account.copy(balance = Balance.apply(account.balance.saldo + value).getOrElse(account.balance))
-
-
-    accountRepository.saveConsigAccount(accountUpdate, client)
-  }
-
   def debitAccount(account: Account, client: Client, value:BigDecimal) = {
     //hacemos las validaciones semejantes a la anterior
   }
 
-  def getAccount(idAccount:String) = {
+  def operationSimple(account: Account, client: Client, typeOperation: String, value:BigDecimal):Account ={
+    if(typeOperation.toLowerCase.equalsIgnoreCase("CONSIGNAR")){
+      account.copy(balance = Balance.apply(account.balance.saldo + value).getOrElse(account.balance))
+    }else{
+      account.copy(balance = Balance.apply(account.balance.saldo - value).getOrElse(account.balance))
+    }
+  }
 
-    //consulta al accountRepository y me devuelve la cuenta
+  def getAccount(idAccount:String) = {
+    accountRepository.getAccountById(idAccount)
   }
 
   def transfer(rootAccount: Account, destinationAccount: Account, value:BigDecimal) = {
