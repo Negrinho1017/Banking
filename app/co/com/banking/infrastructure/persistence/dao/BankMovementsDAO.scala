@@ -22,6 +22,9 @@ class BankMovementsDAO @Inject() (protected val dbConfigProvider: DatabaseConfig
   def findByCodeMovement(codeMovement: String): Future[Option[BankMovementsDto]] =
     db.run(bankMovements.filter(_.codeMovement === codeMovement).result.headOption)
 
+  def findByMovementType(movementType: String): Future[Option[BankMovementsDto]] =
+    db.run(bankMovements.filter(_.movementType === movementType).result.headOption)
+
   private class BankMovementsTable(tag: Tag) extends Table[BankMovementsDto](tag, "bank_movements") {
 
     def codeMovement = column[String]("code_movement", O.PrimaryKey)
