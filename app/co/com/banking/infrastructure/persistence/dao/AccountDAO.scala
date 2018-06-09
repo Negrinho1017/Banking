@@ -19,6 +19,8 @@ class AccountDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvid
 
   def insertAccount(account: AccountDto): Future[Unit] = db.run(Accounts += account).map { _ => () }
 
+  def findByAccountNumber(accountNumber: String): Future[Option[AccountDto]] =
+    db.run(Accounts.filter(_.accountNumber === accountNumber).result.headOption)
 
   private class AccountsTable(tag: Tag) extends Table[AccountDto](tag, "account") {
 

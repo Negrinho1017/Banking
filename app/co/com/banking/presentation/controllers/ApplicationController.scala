@@ -23,6 +23,7 @@ class ApplicationController @Inject()(
 
   //inyectamos el mapper, inyeccion de dependencias
   val clientMapper = ClientMapper
+
   val accountMapper = AccountMapper
 
 
@@ -72,6 +73,36 @@ class ApplicationController @Inject()(
     }
   }
 
+  def findAccountService = Action.async { implicit request =>
+    val accountRequest: AccountDto = accountMapper.accountForm.bindFromRequest.get
+    val accountResult = for {
+      accountR <- accountDAO.findByAccountNumber(accountRequest.accountNumber)
+    } yield (accountR)
+    accountResult.map {
+
+      case accountR =>
+        accountR match {
+          case Some(c) => Ok(toJson(accountMapper.accountForm.fill(c).data))
+          case None => NotFound
+        }
+    }
+  }
+
+  def findAccount(accountNumber: String) = Action.async { implicit request =>
+    val fAccount = for {
+      account <- accountDAO.findByAccountNumber(accountNumber)
+    } yield (account)
+
+    fAccount.map{
+      case (account) =>
+        account match {
+          case Some(c) => Ok(toJson(accountMapper.accountForm.fill(c).data))
+          case None => NotFound
+        }
+    }
+
+  }
+
   def findByMovementType = Action.async { implicit request =>
     val movementRequest: Map[String, String] = movementForm.bindFromRequest.data
     val movementResponse = for {
@@ -101,6 +132,22 @@ class ApplicationController @Inject()(
     }
 
   }
+
+  def findClientByIdentificationNumber(identificationNumber: String) = Action.async { implicit request =>
+    val findClient = for {
+      client <- clientDAO.findByIdentificationNumber(identificationNumber)
+    } yield (client)
+
+    findClient.map{
+      case (client) =>
+        client match {
+          case Some(c) => Ok(toJson(clientMapper.clientForm.fill(c).data))
+          case None => NotFound
+        }
+    }
+
+  }
+
 
 
 
