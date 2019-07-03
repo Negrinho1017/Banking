@@ -32,8 +32,6 @@ class AccountService @Inject()(
   }
 
   def transfer(rootAccount: Account, destinationAccount: Account, value:BigDecimal) = {
-    //aqui hacemos un debito a un cuenta y un credito a otra cuenta
-    //persistimos la información
   }
 
 }

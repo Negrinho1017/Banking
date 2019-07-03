@@ -18,8 +18,8 @@ class AccountBuilder {
     val balance = Balance(BigDecimal.double2bigDecimal(accountDto.balance.get))
     val accountNumber = AccountNumber(accountDto.accountNumber)
     for{
-      b <- balance.right
-      a <- accountNumber.right
+      b <- balance
+      a <- accountNumber
     } yield new Account(b, a, ZonedDateTime.now(), Active, None, Personal)
   }
 

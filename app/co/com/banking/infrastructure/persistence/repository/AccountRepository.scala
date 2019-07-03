@@ -26,9 +26,9 @@ class AccountRepository @Inject()(
     }).value
   }
 
-  def saveMovement(accountOrigin: Account, accountDestination: Account, typeMov: String, value:BigDecimal) ={
+  def saveMovement(accountOrigin: Account, accountDestination: Account, typeMov: String, value:BigDecimal): Future[BankMovementsDto] ={
     val movementDTO = BankMovementsDto.apply(
-      "1",
+      "",
       Option(typeMov),
       Option(accountOrigin.accountNumber.number.toString),
       Option(accountDestination.accountNumber.number.toString),
